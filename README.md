@@ -17,6 +17,8 @@ ReSwap 是一个纯前端以物换物 Web 应用。用户可以本地模拟登�
 - 物品详情、物主资料、选择自己的物品发起交换。
 - 发布物品，支持本地 base64 图片上传、分类和成色选择。
 - 交换管理，区分我发起的和我收到的请求，支持同意、拒绝、完成。
+- 交换完成后双方互评（一到五星 + 一句实际表现）：单方提交后只显示等待，双方提交后互相可见；每条交换每人限评一次，提交后不可修改。
+- 双方评价齐全后，按各自最近五次收到的评价重算信用分，个人页、物品详情、交换记录中的信用等级同步更新；未评价的交换不会改动已完成物品。
 - 个人中心，编辑资料、上传头像、查看我发布的物品。
 - 主题切换、全局错误处理和 Vant 提示。
 
@@ -49,16 +51,16 @@ pnpm build
 
 ```text
 src/
-├── api/              # userApi.ts, itemApi.ts, exchangeApi.ts：本地数据 API 层
-├── stores/           # authStore.ts, itemStore.ts, exchangeStore.ts, themeStore.ts
-├── models/           # user.ts, item.ts, exchange.ts：独立数据模型
+├── api/              # userApi.ts, itemApi.ts, exchangeApi.ts, reviewApi.ts：本地数据 API 层
+├── stores/           # authStore.ts, itemStore.ts, exchangeStore.ts, reviewStore.ts, themeStore.ts
+├── models/           # user.ts, item.ts, exchange.ts, review.ts：独立数据模型
 ├── types/            # 共享类型补充
-├── components/common/# 共享业务组件和 GlobalErrorBoundary
+├── components/common/# 共享业务组件（含 ReviewPanel）和 GlobalErrorBoundary
 ├── hooks/            # useAuth.ts, useLocalStorage.ts, useExchangeStats.ts
 ├── pages/            # Home, ItemDetail, Publish, Exchanges, Profile
 ├── router/           # index.ts + guards.ts
 ├── utils/            # storage.ts, formatters.ts, validators.ts, message.ts, themeUtils.ts
-├── constants/        # item.ts, exchange.ts, themes.ts, messages.ts
+├── constants/        # item.ts, exchange.ts, review.ts, themes.ts, messages.ts
 ├── App.vue
 ├── main.ts
 └── styles.css
@@ -69,7 +71,16 @@ src/
 - `utils/storage.ts` 统一封装 localStorage 和 IndexedDB。
 - 所有 `api/*Api.ts` 通过 `storage.ts` 读写数据，不在组件里直接写业务数据。
 - 存储层包含序列化、版本号、过期清理、存储 key 管理。
-- 首次启动会写入演示用户、物品和交换请求。
+- 首次启动会写入演示用户、物品和交换请求（含一条已完成交换，用于演示互评）。
+- 评价数据存储在 `reswap:reviews` key 下，与交换记录分离。
+
+## 互评与信用分规则
+
+- 只有状态为「已完成」的交换，双方才能互相评价（`components/common/ReviewPanel.vue`）。
+- 每人对每条交换只能评价一次，提交后不可修改（`api/reviewApi.ts` 中强校验）。
+- 单方提交后仅显示「等待对方评价」，双方提交后评价内容互相可见。
+- 双方评价齐全后，按各自最近五次收到的评价重算信用分：信用分 = 最近五次星级平均分 × 20（`constants/review.ts` 中的 `CREDIT_REVIEW_WINDOW` 与 `CREDIT_SCORE_PER_STAR`）。
+- 重算只更新用户信用分，不会改动已完成物品的状态。
 
 ## 横切关注点
 

@@ -17,6 +17,17 @@ const seedExchanges: Exchange[] = [
     created_at: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
     updated_at: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
   },
+  {
+    id: 'exchange_seed_done',
+    from_user_id: 'user_chen',
+    to_user_id: 'user_lin',
+    from_item_id: 'item_plant',
+    to_item_id: 'item_lamp',
+    status: ExchangeStatus.COMPLETED,
+    message: '绿萝换小夜灯，周末地铁口当面交换。',
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 70).toISOString(),
+    updated_at: new Date(Date.now() - 1000 * 60 * 60 * 60).toISOString(),
+  },
 ];
 
 export const exchangeApi = {
@@ -25,6 +36,11 @@ export const exchangeApi = {
     if (exchanges.length) return exchanges;
     await storage.set(STORAGE_KEYS.exchanges, seedExchanges);
     return seedExchanges;
+  },
+
+  async detail(id: string): Promise<Exchange | undefined> {
+    const exchanges = await this.list();
+    return exchanges.find((item) => item.id === id);
   },
 
   async create(draft: ExchangeDraft): Promise<Exchange> {

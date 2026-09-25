@@ -52,6 +52,18 @@ const seedItems: Item[] = [
     location: '杭州 · 西湖',
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 90).toISOString(),
   },
+  {
+    id: 'item_plant',
+    user_id: 'user_chen',
+    title: '绿萝盆栽一盆',
+    description: '长势很好，已和林小雨的小夜灯完成交换，保留记录用于互评演示。',
+    category: '家居',
+    condition: ItemCondition.GOOD,
+    images: [],
+    status: ItemStatus.EXCHANGED,
+    location: '苏州 · 工业园',
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 80).toISOString(),
+  },
 ];
 
 export const itemApi = {

@@ -63,4 +63,16 @@ export const userApi = {
     await storage.set(STORAGE_KEYS.users, nextUsers);
     return nextUser;
   },
+
+  async setCreditScore(userId: string, score: number): Promise<User> {
+    const users = await this.list();
+    const user = users.find((item) => item.id === userId);
+    if (!user) throw new Error('用户不存在');
+    const nextUser: User = { ...user, credit_score: score };
+    await storage.set(
+      STORAGE_KEYS.users,
+      users.map((item) => (item.id === userId ? nextUser : item)),
+    );
+    return nextUser;
+  },
 };

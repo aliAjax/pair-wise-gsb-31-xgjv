@@ -42,6 +42,8 @@ export const formatCreditLevel = (score: number) => {
   return '需谨慎';
 };
 
+export const formatRating = (rating: number) => `${rating} 星`;
+
 export const statusToneClass = (status: ItemStatus | ExchangeStatus) => {
   if (status === ItemStatus.AVAILABLE || status === ExchangeStatus.ACCEPTED) return 'status-good';
   if (status === ItemStatus.OFFLINE || status === ExchangeStatus.REJECTED) return 'status-muted';

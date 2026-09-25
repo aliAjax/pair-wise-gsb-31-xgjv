@@ -594,6 +594,52 @@ textarea {
   gap: 8px;
 }
 
+.review-panel {
+  display: grid;
+  gap: 12px;
+  border-top: 1px dashed var(--rs-border);
+  padding-top: 14px;
+}
+
+.review-panel__form {
+  display: grid;
+  gap: 12px;
+}
+
+.review-panel__item {
+  display: grid;
+  gap: 6px;
+  border-radius: 7px;
+  background: color-mix(in oklch, var(--rs-accent), transparent 90%);
+  padding: 12px;
+}
+
+.review-panel__item header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.review-panel__item p {
+  margin: 0;
+}
+
+.review-panel__item small,
+.review-panel__waiting {
+  color: color-mix(in oklch, var(--rs-text), transparent 42%);
+}
+
+.review-panel__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.review-panel__waiting {
+  margin: 0;
+}
+
 .profile-side {
   display: grid;
   gap: 18px;

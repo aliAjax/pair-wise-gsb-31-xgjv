@@ -17,8 +17,11 @@
       </div>
     </div>
     <p>{{ exchange.message || formatStatusMessage(exchange.status) }}</p>
+    <ReviewPanel :exchange="exchange" :users="users" />
     <footer>
-      <span v-if="fromUser && toUser">{{ fromUser.nickname }} → {{ toUser.nickname }}</span>
+      <span v-if="fromUser && toUser">
+        {{ fromUser.nickname }}（{{ formatCreditLevel(fromUser.credit_score) }}） → {{ toUser.nickname }}（{{ formatCreditLevel(toUser.credit_score) }}）
+      </span>
       <div v-if="canOperate" class="exchange-card__actions">
         <button v-if="exchange.status === ExchangeStatus.PENDING" type="button" @click="$emit('accept', exchange.id)">
           同意
@@ -42,7 +45,9 @@ import type { Exchange } from '@/models/exchange';
 import type { Item } from '@/models/item';
 import type { User } from '@/models/user';
 import { useAuthStore } from '@/stores/authStore';
-import { formatDate, formatExchangeStatus, formatStatusMessage, statusToneClass } from '@/utils/formatters';
+import { formatCreditLevel, formatDate, formatExchangeStatus, formatStatusMessage, statusToneClass } from '@/utils/formatters';
+
+import ReviewPanel from './ReviewPanel.vue';
 
 const props = defineProps<{
   exchange: Exchange;
