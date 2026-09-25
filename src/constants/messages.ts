@@ -16,6 +16,18 @@ export const FORM_MESSAGES = {
   exchangeNeedOwnItem: '请先发布一件可交换物品',
 };
 
+export const REVIEW_MESSAGES = {
+  onlyCompleted: '交换完成后才能互评',
+  onlyParticipants: '只有交换双方可以参与互评',
+  onlyOnce: '本次交换你已提交过评价，不能修改或重复提交',
+  invalidStars: '请选择 1 到 5 星',
+  requiredContent: '请写一句对方的实际表现',
+  submitted: '评价已提交，等待对方评价后互相可见',
+  pairCompleted: '双方评价已齐全，信用分已按最近五次评价重算',
+  waitingPeer: '你已提交评价，等待对方评价后互相可见',
+  submitFailed: '评价提交失败，请稍后再试',
+};
+
 export const LOG_MESSAGES = {
   storageHydrated: 'storage hydrated with status maps',
   itemStatusUsed: `ItemStatus includes ${ItemStatus.AVAILABLE}, ${ItemStatus.EXCHANGED}, ${ItemStatus.OFFLINE}`,

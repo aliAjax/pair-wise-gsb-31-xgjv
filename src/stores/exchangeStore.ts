@@ -47,7 +47,7 @@ export const useExchangeStore = defineStore('exchanges', {
     async complete(id: string) {
       await exchangeApi.transition(id, ExchangeStatus.COMPLETED);
       this.exchanges = await exchangeApi.list();
-      message('交换已完成，双方物品状态已更新', 'success');
+      message('交换已完成，双方物品状态已更新，可以进行互评', 'success');
     },
   },
 });

@@ -32,9 +32,11 @@
         :exchange="exchange"
         :items="itemStore.items"
         :users="authStore.users"
+        :reviews="reviewStore.reviews"
         @accept="exchangeStore.accept"
         @reject="exchangeStore.reject"
         @complete="completeExchange"
+        @review="reviewStore.submit"
       />
     </div>
     <EmptyState
@@ -57,10 +59,12 @@ import { useExchangeStats } from '@/hooks/useExchangeStats';
 import { useAuthStore } from '@/stores/authStore';
 import { useExchangeStore } from '@/stores/exchangeStore';
 import { useItemStore } from '@/stores/itemStore';
+import { useReviewStore } from '@/stores/reviewStore';
 
 const authStore = useAuthStore();
 const itemStore = useItemStore();
 const exchangeStore = useExchangeStore();
+const reviewStore = useReviewStore();
 const tab = ref<'sent' | 'received'>('sent');
 
 const mine = computed(() => {

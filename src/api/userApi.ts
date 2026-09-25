@@ -63,4 +63,13 @@ export const userApi = {
     await storage.set(STORAGE_KEYS.users, nextUsers);
     return nextUser;
   },
+
+  async applyCreditScores(scores: Record<string, number>): Promise<User[]> {
+    const users = await this.list();
+    const nextUsers = users.map((user) =>
+      scores[user.id] === undefined ? user : { ...user, credit_score: scores[user.id] },
+    );
+    await storage.set(STORAGE_KEYS.users, nextUsers);
+    return nextUsers;
+  },
 };

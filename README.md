@@ -17,6 +17,8 @@ ReSwap 是一个纯前端以物换物 Web 应用。用户可以本地模拟登�
 - 物品详情、物主资料、选择自己的物品发起交换。
 - 发布物品，支持本地 base64 图片上传、分类和成色选择。
 - 交换管理，区分我发起的和我收到的请求，支持同意、拒绝、完成。
+- 交换完成后双方互评：各选 1-5 星并写一句实际表现，单方提交后只显示等待，双方提交后互相可见；每条交换每人限评一次，提交后不可修改。
+- 双方评价齐全后，按各自最近五次收到的评价重算信用分，个人页、物品详情、交换记录中的信用等级同步更新；未评价的交换不影响已完成物品。
 - 个人中心，编辑资料、上传头像、查看我发布的物品。
 - 主题切换、全局错误处理和 Vant 提示。
 
@@ -49,20 +51,29 @@ pnpm build
 
 ```text
 src/
-├── api/              # userApi.ts, itemApi.ts, exchangeApi.ts：本地数据 API 层
-├── stores/           # authStore.ts, itemStore.ts, exchangeStore.ts, themeStore.ts
-├── models/           # user.ts, item.ts, exchange.ts：独立数据模型
+├── api/              # userApi.ts, itemApi.ts, exchangeApi.ts, reviewApi.ts：本地数据 API 层
+├── stores/           # authStore.ts, itemStore.ts, exchangeStore.ts, reviewStore.ts, themeStore.ts
+├── models/           # user.ts, item.ts, exchange.ts, review.ts：独立数据模型
 ├── types/            # 共享类型补充
 ├── components/common/# 共享业务组件和 GlobalErrorBoundary
 ├── hooks/            # useAuth.ts, useLocalStorage.ts, useExchangeStats.ts
 ├── pages/            # Home, ItemDetail, Publish, Exchanges, Profile
 ├── router/           # index.ts + guards.ts
 ├── utils/            # storage.ts, formatters.ts, validators.ts, message.ts, themeUtils.ts
-├── constants/        # item.ts, exchange.ts, themes.ts, messages.ts
+├── constants/        # item.ts, exchange.ts, review.ts, themes.ts, messages.ts
 ├── App.vue
 ├── main.ts
 └── styles.css
 ```
+
+## 互评与信用分规则
+
+- 只有状态为「已完成」的交换，双方（发起人和物主）才能互评。
+- 每人对同一条交换只能提交一次评价（1-5 星 + 一句实际表现），提交后不可修改。
+- 单方提交后仅显示「等待对方评价」，双方提交后两条评价互相可见。
+- 双方评价齐全时，按各自最近五次收到的评价重算信用分：`信用分 = 平均星级 × 20`（满分 100）。
+- 信用等级随信用分同步更新，展示在个人页、物品详情的物主卡片和交换记录中。
+- 互评流程不改动物品状态，未评价的交换不影响已完成物品。
 
 ## 数据持久化说明
 

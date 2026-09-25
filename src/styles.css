@@ -594,6 +594,65 @@ textarea {
   gap: 8px;
 }
 
+.review-box {
+  display: grid;
+  gap: 12px;
+  border-top: 1px dashed var(--rs-border);
+  padding-top: 14px;
+}
+
+.review-form {
+  display: grid;
+  gap: 10px;
+}
+
+.review-form__stars {
+  display: flex;
+  gap: 6px;
+}
+
+.review-form__stars button {
+  border: 1px solid var(--rs-border);
+  border-radius: 7px;
+  padding: 6px 10px;
+  background: transparent;
+  color: color-mix(in oklch, var(--rs-text), transparent 55%);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.review-form__stars button.active {
+  border-color: transparent;
+  background: color-mix(in oklch, #d99a2b, transparent 82%);
+  color: #b87a14;
+}
+
+.review-item {
+  display: grid;
+  gap: 4px;
+  border-radius: 7px;
+  background: color-mix(in oklch, var(--rs-primary), transparent 90%);
+  padding: 12px;
+}
+
+.review-item__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.review-stars {
+  color: #b87a14;
+  letter-spacing: 2px;
+}
+
+.review-item p,
+.review-waiting {
+  margin: 0;
+  color: color-mix(in oklch, var(--rs-text), transparent 30%);
+}
+
 .profile-side {
   display: grid;
   gap: 18px;

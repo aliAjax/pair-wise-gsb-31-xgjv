@@ -12,6 +12,7 @@ export const STORAGE_KEYS = {
   users: prefixed('users'),
   items: prefixed('items'),
   exchanges: prefixed('exchanges'),
+  reviews: prefixed('reviews'),
   theme: prefixed('theme'),
   lastClean: prefixed('last-clean'),
 };

@@ -29,6 +29,10 @@ export const useAuthStore = defineStore('auth', {
       this.currentUser = await userApi.login(userId);
       message(`已切换为 ${this.currentUser.nickname}`, 'success');
     },
+    async refreshUsers() {
+      this.users = await userApi.list();
+      this.currentUser = await userApi.current();
+    },
     async updateProfile(draft: Partial<UserDraft>) {
       const error = validateUserDraft({ ...this.currentUser, ...draft });
       if (error) {
